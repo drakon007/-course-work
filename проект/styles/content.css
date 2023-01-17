@@ -1,0 +1,5 @@
+.content {
+    background-color: #E0F6FF;
+    display: flex;
+    flex-direction: row;
+}

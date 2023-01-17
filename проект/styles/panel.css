@@ -1,0 +1,28 @@
+.panel {
+    display: flex;
+    flex-wrap: wrap;
+    background: #2D3C60;
+    width: 250px;
+}
+
+.panel .logotype,
+.nav-url {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.logotype {
+    margin: 50px;
+}
+
+.nav-url--href {
+    margin: 25px;
+ color: white;
+ text-decoration: none;
+}
+
+.active {
+    width: 100%;
+    background-color: #E0F6FF;
+}
