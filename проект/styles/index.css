@@ -4,3 +4,13 @@
 @import "heder.css";
 @import "main.css";
 @import "panel.css";
+
+body {
+    margin: 0;
+}
+
+.container {
+    background-color: #E0F6FF;
+    display: flex;
+    flex-direction: row;
+}

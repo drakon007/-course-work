@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     background: #2D3C60;
-    width: 250px;
+    width: 300px;
 }
 
 .panel .logotype,
@@ -13,16 +13,27 @@
 }
 
 .logotype {
+    color: green;
     margin: 50px;
 }
 
-.nav-url--href {
+.panel .nav-url--href {
     margin: 25px;
- color: white;
- text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
-.active {
+.panel .nav-url--div {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.panel .active {
     width: 100%;
     background-color: #E0F6FF;
+}
+
+.panel .active a {
+    color: black;
 }
