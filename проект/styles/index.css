@@ -1,9 +1,25 @@
-@import "content.css";
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text&display=swap');
+
 @import "container.css";
-@import "footer.css";
 @import "heder.css";
-@import "main.css";
 @import "panel.css";
+
+/* 
+ps deleted
+тип 
+Column Drop
+
+цвета
+основной фон
+#E0F6FF
+цвет панели
+#2D3C60
+
+Libre Caslon Text
+размеры шриф
+16 / 24 /32
+
+*/
 
 body {
     margin: 0;
@@ -13,4 +29,9 @@ body {
     background-color: #E0F6FF;
     display: flex;
     flex-direction: row;
+}
+
+img {
+    width: 100%;
+    max-width: 100%;
 }

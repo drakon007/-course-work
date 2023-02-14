@@ -36,3 +36,31 @@ main {
     background-color: red;
     /* background-color: #E0F6FF; */
 }
+
+.search {
+    display: flex;
+
+}
+
+thead{
+    top: 0;
+    position: sticky;
+    width: 20%;
+}
+
+tbody {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%; /*media*/
+    overflow: hidden;
+    height: 300px;
+}
+
+table {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%; /*media*/
+    background-color: blueviolet;
+}
+
