@@ -1,18 +1,17 @@
 .panel {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     background: #2D3C60;
     width: 300px;
 }
 
-.panel .logotype,
-.nav-url {
+.panel .nav-url {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 100%;
 }
 
-.logotype {
+.panel .logotype {
     color: green;
     margin: 50px;
 }
