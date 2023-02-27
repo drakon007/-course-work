@@ -21,6 +21,10 @@ Libre Caslon Text
 
 */
 
+*{
+    font-family: sans-serif;
+}
+
 body {
     margin: 0;
 }
