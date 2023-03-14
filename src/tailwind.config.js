@@ -12,8 +12,13 @@ module.exports = {
       colors: {
         'panel-grey': '#2D3C60',
         'white': '#ffffff',
+        'textColor': '#4980BF',
       },
       spacing: {
+        'table': '500px',
+        '900': '900px',
+        '700': '700px',
+        '500': '500px',
         '300': '300px',
         '250': '250px',
         '200': '200px',
