@@ -14,8 +14,15 @@ module.exports = {
         'white': '#ffffff',
         'textColor': '#4980BF',
       },
+      height: {
+        'table': '80vh',
+      },
+      width: {
+        'table': '85%',
+        'aside': '15%'
+      },
       spacing: {
-        'table': '500px',
+        'height': '1080px',
         '900': '900px',
         '700': '700px',
         '500': '500px',
