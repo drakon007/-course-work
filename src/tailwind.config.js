@@ -12,14 +12,22 @@ module.exports = {
       colors: {
         'panel-grey': '#2D3C60',
         'white': '#ffffff',
+        'black': '#000000',
         'textColor': '#4980BF',
+        'bgpage': 'rgb(19, 19, 21)',
+        'bgform': 'rgb(38, 37, 43)',
+        'bgbut': 'rgb(107, 117, 127)',
       },
       height: {
         'table': '80vh',
+        'form': '50vh',
       },
       width: {
         'table': '85%',
-        'aside': '15%'
+        'aside': '15%',
+        'form': '450px',
+        'mid': '50%',
+        'min': '20%',
       },
       spacing: {
         'height': '1080px',
@@ -34,6 +42,8 @@ module.exports = {
         '50': '50px',
       },
       margin: {
+        'upform': '15vh',
+        'downform': '10vh',
         '25px': '25px',
         '20px': '20px',
         '15px': '15px',
@@ -41,6 +51,7 @@ module.exports = {
         '5px': '5px',
       },
       padding: {
+        'form': '25vh',
         '25px': '25px',
         '20px': '20px',
         '15px': '15px',

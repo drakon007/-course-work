@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles/output.css">
+        <title>login</title>
+      </head>
+<body>
+    
+    <!--контент-->
+    <div class="contener h-screen w-screen bg-bgpage flex justify-items-center items-center">
+
+
+        <!--поле для формы и лого-->
+        <div class="form flex h-cform w-form mx-auto flex-col">
+            <!--лого-->
+            <div class="text-white text-center">Name web-program</div>
+            <!--поле ошибки-->
+            <span id=form__error></span>
+
+            <!--форма отправки-->
+            <form id="authorization-form" name="login" class="form flex h-cform w-form mx-auto flex-col rounded-xl bg-bgform p-4 mt-6">
+
+                 <!--name-->
+                <label class="text-white ml-6">Имя пользователя</label>
+                <input class="w-full rounded-xl mt-2" type="text" id="login"  name="username" placeholder="username" />
+
+                <!--password-->
+                <div class="mt-4"></div>
+                <label class="text-white ml-6">Пароль пользователя</label>
+                <input class="w-full rounded-xl mt-2" type="password" id="password" name="password"  placeholder="password" />
+
+                <div class="mt-4"></div>
+                <button class="bg-bgbut w-full mt-4 rounded-xl py-2 text-white">Вход</button>
+            
+            </form>
+
+        </div>
+       
+    </div> 
+</body>
+</html>
