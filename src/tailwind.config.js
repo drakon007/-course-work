@@ -17,12 +17,15 @@ module.exports = {
         'bgpage': 'rgb(19, 19, 21)',
         'bgform': 'rgb(38, 37, 43)',
         'bgbut': 'rgb(107, 117, 127)',
+        'tgray': 'rgb(140, 140, 148)',
       },
       height: {
         'table': '80vh',
         'form': '50vh',
       },
       width: {
+        'card': '22.75%',
+        'gap':  '3%', 
         'table': '85%',
         'aside': '15%',
         'form': '450px',

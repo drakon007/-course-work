@@ -10,20 +10,21 @@
 <body>
     
     <!--контент-->
-    <div class="contener h-screen w-screen bg-bgpage flex justify-items-center items-center">
+    <main class="contener h-screen w-screen bg-bgpage flex justify-items-center items-center">
 
 
         <!--поле для формы и лого-->
         <div class="form flex h-cform w-form mx-auto flex-col">
+
             <!--лого-->
             <div class="text-white text-center">Name web-program</div>
             <!--поле ошибки-->
-            <span id=form__error></span>
+            <span id=form__error class="text-white text-center"></span>
 
             <!--форма отправки-->
             <form id="authorization-form" name="login" class="form flex h-cform w-form mx-auto flex-col rounded-xl bg-bgform p-4 mt-6">
 
-                 <!--name-->
+                <!--name-->
                 <label class="text-white ml-6">Имя пользователя</label>
                 <input class="w-full rounded-xl mt-2" type="text" id="login"  name="username" placeholder="username" />
 
@@ -39,6 +40,7 @@
 
         </div>
        
-    </div> 
+    </main>
+    
 </body>
 </html>
