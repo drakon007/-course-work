@@ -1114,6 +1114,10 @@ input:checked + .toggle-bg {
   margin-bottom: 0.5rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .ml-6 {
   margin-left: 1.5rem;
 }
@@ -1132,10 +1136,6 @@ input:checked + .toggle-bg {
 
 .mt-6 {
   margin-top: 1.5rem;
-}
-
-.mt-8 {
-  margin-top: 2rem;
 }
 
 .block {
@@ -1174,6 +1174,10 @@ input:checked + .toggle-bg {
   height: 6rem;
 }
 
+.h-35 {
+  height: 35px;
+}
+
 .h-4 {
   height: 1rem;
 }
@@ -1194,12 +1198,20 @@ input:checked + .toggle-bg {
   height: 80vh;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .min-h-full {
   min-height: 100%;
 }
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-35 {
+  width: 35px;
 }
 
 .w-4 {
@@ -1222,10 +1234,6 @@ input:checked + .toggle-bg {
   width: 15%;
 }
 
-.w-card {
-  width: 22.75%;
-}
-
 .w-form {
   width: 450px;
 }
@@ -1236,10 +1244,6 @@ input:checked + .toggle-bg {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-table {
-  width: 85%;
 }
 
 .min-w-max {
@@ -1533,6 +1537,10 @@ input:checked + .toggle-bg {
   padding: 1rem;
 }
 
+.p-6 {
+  padding: 1.5rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1620,6 +1628,11 @@ input:checked + .toggle-bg {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .font-medium {
