@@ -1138,18 +1138,6 @@ input:checked + .toggle-bg {
   margin-top: 2rem;
 }
 
-.mr-8 {
-  margin-right: 2rem;
-}
-
-.mr-10 {
-  margin-right: 2.5rem;
-}
-
-.mr-9 {
-  margin-right: 2.25rem;
-}
-
 .block {
   display: block;
 }
@@ -1252,6 +1240,11 @@ input:checked + .toggle-bg {
 
 .w-table {
   width: 85%;
+}
+
+.min-w-max {
+  min-width: -moz-max-content;
+  min-width: max-content;
 }
 
 .flex-1 {
@@ -1366,6 +1359,10 @@ input:checked + .toggle-bg {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .justify-items-center {
