@@ -32,14 +32,49 @@
 
     </header>
 
-    <main class="flex mx-auto w-4/5 flex-wrap justify-evenly bg-bgform rounded-xl mt-6">
-        <div class="form w-full h-full min-h-table p-6">
+    <main class="flex mx-auto w-4/5 flex-wrap 2xl:flex-row xl:flex-row lg:flex-row sm:flex-col bg-bgform rounded-xl mt-6 h-table">
+
+        <div class="form lg:w-1/2 sm:w-full p-6 mx-auto">
             
             <p class="text-white text-2xl">Название ПК</p>
-            
-        
+            <p class="text-white mt-4 text-base">Основные характеристики:</p>
+
+            <div class="required">
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl"><p class="text-white p-2">Название</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl"><p class="text-white p-2">workstation name pc 1</p></div>
+                </div>
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl"><p class="text-white p-2">IP</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl"><p class="text-white p-2">192.168.1.1</p></div>
+                </div>
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl"><p class="text-white p-2">MAC</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl"><p class="text-white p-2">aa:aa:aa:aa:aa:aa</p></div>
+                </div>
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl"><p class="text-white p-2">Маска</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl"><p class="text-white p-2">255.255.255.0</p></div>
+                </div>
+               
+            </div>
+
+            <p class="text-white mt-4 text-base">Дополнительно:</p>
+
+            <div class="optional">
+                <!--заполнить дополнительные опции-->
+            </div>
+        </div>
+
+        <div class="form lg:w-1/2 sm:w-full p-6 mx-auto">
+            <div class="required flex">
+                <div class="bg-dark-gray p-1.5 rounded-l-xl"><label class="text-white p-2">Название</label></div>
+                <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl"><label class="text-white p-2">workstation name pc 1</label></div>
+               
+            </div>
         </div>
     </main>
+
 
 </body>
 </html>
