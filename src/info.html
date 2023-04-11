@@ -32,7 +32,7 @@
 
     </header>
 
-    <main class="flex mx-auto w-4/5 flex-wrap 2xl:flex-row xl:flex-row lg:flex-row sm:flex-col bg-bgform rounded-xl mt-6 h-table">
+    <main class="flex mx-auto w-4/5 flex-wrap 2xl:flex-row xl:flex-row lg:flex-row sm:flex-col bg-bgform rounded-xl mt-6 min-h-table ">
 
         <div class="form lg:w-1/2 sm:w-full p-6 mx-auto">
             
@@ -63,14 +63,33 @@
 
             <div class="optional">
                 <!--заполнить дополнительные опции-->
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl"><p class="text-white p-2">Состояние:</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl"><p class="text-white p-2">Включен</p></div>
+                </div>
+                <div class="w-full flex justify-between mt-2">
+                    <p class="text-white p-2">Включить пк</p>
+                    <button class="text-white p-2 bg-very-dark-gray rounded-xl">Включение</button>
+                </div>
+                <div class="w-full flex justify-between mt-2">
+                    <p class="text-white p-2">Выключить пк</p>
+                    <button class="text-white p-2 bg-very-dark-gray rounded-xl">Выключение</button>
+                </div>
             </div>
         </div>
 
-        <div class="form lg:w-1/2 sm:w-full p-6 mx-auto">
-            <div class="required flex">
-                <div class="bg-dark-gray p-1.5 rounded-l-xl"><label class="text-white p-2">Название</label></div>
-                <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl"><label class="text-white p-2">workstation name pc 1</label></div>
-               
+        <div class="form lg:w-1/2 sm:w-full p-12 mx-auto">
+            <div class="information bg-dark-blue rounded-r-xl">
+                <h1 class="text-white pt-3 pl-3 text-base">Дополнительная информация:</h1>
+                <ol class="text-white pl-9 list-decimal pb-3">
+                    <li>Название ПК берется из Windows</li>
+                    <li>IP адрес на текущийпомент установленный на ПК</li>
+                    <li>MAC адрес постоянен всегда, так как присваевается самому устройству</li>
+                    <li>Маска помогает определить сеть и конечный хост</li>
+                        <ul class="list-disc pl-3">
+                            <li>В меню дополнительно скоро появятся новые пункты</li>
+                        </ul>
+                </ol>
             </div>
         </div>
     </main>

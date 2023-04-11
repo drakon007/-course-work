@@ -38,10 +38,7 @@ module.exports = {
         'light-gray': 'rgb(200, 200, 200)',
         'dark-gray': 'rgb(41, 48, 54)',
         'very-dark-gray': 'rgb(17, 17, 17)',
-        'light-blue': 'rgb(200, 200, 200)',
-      
-
-
+        'dark-blue': 'rgb(35, 47, 61)',
       },
       height: {
         'table': '80vh',
