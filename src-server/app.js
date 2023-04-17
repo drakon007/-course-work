@@ -9,7 +9,7 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 
 // импортируем модули путей
-import { authRouter } from './routers/authRouters';
+import { authRouter } from './routers/authRouters.js';
 
 
 
