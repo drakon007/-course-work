@@ -19,20 +19,11 @@ function generateAccessToken(id, roles) {
     return jwt.sign(payload, secret, {expiresIn: "6h"});
 }
 
-// шифруем токен для авторизации, что бы обеспечить безопсную передачу
-function parstJwt(token) {
-let base64Url = token.split('.')[1];
-let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-}).join(''));
-return JSON.parse(jsonPayload);
-};
-
 // функция регистрации пользователя
 export async function register(req, res) {
-    try {
 
+    try {
+        
         // деструкторизация пользователя
         const { name, password } = req.body;
         const candidate  = await User.findOne({ name });
@@ -48,7 +39,7 @@ export async function register(req, res) {
         const hash = bcrypt.hashSync(password, 10);
 
         // создание учетки с ролью (user)
-        const userRole = await Role.findOne({value: 'USER'});
+        const userRole = await Role.findOne({value: 'ADMIN'});
         
         // создание пользователя и его добовление
         const user = new User({ name, password: hash, roles: [userRole.value]});
@@ -93,9 +84,25 @@ export async function login(req, res) {
         // ответ токном
         return res.json({token, message: 'Авторизация прошла успешно'});
 
-    } catch (e) {
+    } catch (error) {
 
         // отклик серверной части пользователю
         return res.status(400).json({ message: 'Ошибка при авторизации' });
     }
 }
+
+export async function users(req, res) {
+    try {
+        const users = await User.find()
+       return res.json(users)
+    } catch (error) {
+        console.log(e)
+        return res.status(400).json({message: "Ошибка с юзерами"})
+    }
+}
+
+
+// const userRole = new Role()
+// const adminRole = new Role({value: "ADMIN"})
+// await userRole.save()
+// await adminRole.save()
