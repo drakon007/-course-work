@@ -1,10 +1,11 @@
 // импорт модулей
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { User } from '../models/User.js'; // {user}
-import { Role } from '../models/Role.js'; // {role}
 import * as dotenv from 'dotenv';
 dotenv.config();
+
+import { User } from '../models/User.js';
+import { Role } from '../models/Role.js';
 
 const SECRET_KEY = process.env.SECRET_KEY;
 const  secret = `${SECRET_KEY}`;
@@ -23,7 +24,7 @@ function generateAccessToken(id, roles) {
 export async function register(req, res) {
 
     try {
-        
+
         // деструкторизация пользователя
         const { name, password } = req.body;
         const candidate  = await User.findOne({ name });

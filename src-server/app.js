@@ -10,6 +10,7 @@ import fileUpload from 'express-fileupload';
 
 // импортируем модули путей
 import { authRouter } from './routers/authRouters.js';
+import { pcRouter } from './routers/pcRouters.js';
 
 
 
@@ -30,6 +31,7 @@ app.use(express.json());
 
 // добавление ветки 
 app.use('/auth', authRouter);
+app.use('/pc', pcRouter);
 
 
 // функция для подключения к базе данных
