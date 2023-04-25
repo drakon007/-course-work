@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
+import ping from "ping";
 
 import { User } from "../models/User.js";
 import { Role } from "../models/Role.js";
@@ -31,14 +32,7 @@ export async function getOne(req, res) {
 
     try {
    
-      const ps = await Pc.findById(pcId);
-      console.log(ps);
-
-      //todo -----
-
-
-      const pc = await Pc.find();
-      console.log(pc);
+      const pc = await Pc.findById(pcId);
       return res.status(200).json(pc);
 
     } catch (error) {
@@ -50,11 +44,21 @@ export async function getOne(req, res) {
 
 }
 
-export async function button(req, res) {
+export async function pingOne(req, res) {
 
     try {
 
-
+      let hosts = ['10.100.3.3', '10.100.3.4'];
+      let arr = [];
+      for(let host of hosts){
+         let res = await ping.promise.probe(host);
+         console.log(res);
+         arr.push(res)
+     }  
+     
+      console.log(arr)
+      return res.status(200, {'Content-Type': 'text/html; charset=utf-8'}).json(arr);
+      
 
     } catch (error) {
 

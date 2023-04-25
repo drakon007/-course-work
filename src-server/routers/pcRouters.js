@@ -7,3 +7,4 @@ pcRouter.get("/getall", pcController.getAll);
 
 pcRouter.get("/getone", pcController.getOne);
 
+pcRouter.get("/ping", pcController.pingOne);
