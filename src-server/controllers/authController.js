@@ -40,7 +40,7 @@ export async function register(req, res) {
         const hash = bcrypt.hashSync(password, 10);
 
         // создание учетки с ролью (user)
-        const userRole = await Role.findOne({value: 'ADMIN'});
+        const userRole = await Role.findOne({value: 'USER'});
         
         // создание пользователя и его добовление
         const user = new User({ name, password: hash, roles: [userRole.value]});
@@ -83,7 +83,9 @@ export async function login(req, res) {
         const token = generateAccessToken(user._id, user.role);
         
         // ответ токном
-        return res.json({token, message: 'Авторизация прошла успешно'});
+        // return res.json({token, message: 'Авторизация прошла успешно'});
+        return res.json({token});
+        
 
     } catch (error) {
 
@@ -102,7 +104,7 @@ export async function users(req, res) {
     }
 }
 
-
+// роли
 // const userRole = new Role()
 // const adminRole = new Role({value: "ADMIN"})
 // await userRole.save()

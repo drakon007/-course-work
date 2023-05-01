@@ -35,7 +35,7 @@ export default function authMiddleWare(req, res, next) {
 
     // отклик серверной части пользователю
     console.log(error);
-    return res.status(401).json({ message: 'Пользователь не аавторизован'});
+    return res.status(401).json({ message: 'Пользователь не авторизован'});
 
     }
 }

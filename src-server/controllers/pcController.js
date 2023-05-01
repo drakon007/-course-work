@@ -44,14 +44,38 @@ export async function getOne(req, res) {
 
 }
 
+
+// ping 
 export async function pingOne(req, res) {
 
     try {
 
-      let hosts = ['10.100.3.3', '10.100.3.4'];
+      let host = "10.100.3.3";
+      let resPC = await ping.promise.probe(host, {
+         timeout: 1, //время отправки
+      });
+
+      return res.status(200, {'Content-Type': 'text/html; charset=utf-8'}).json(resPC);
+      
+    } catch (error) {
+
+       console.log(error, "ошибка нет токена авторизации");
+       return res.status(403).json({ message: "У вас нет доступа сюда" });
+
+    }
+
+}
+
+export async function pingAll(req, res)  {
+   
+   try {
+
+      let hosts = ["10.100.3.3","10.100.3.4"];
       let arr = [];
       for(let host of hosts){
-         let res = await ping.promise.probe(host);
+         let res = await ping.promise.probe(host, {
+            timeout: 1,
+         });
          console.log(res);
          arr.push(res)
      }  
