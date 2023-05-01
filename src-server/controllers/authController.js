@@ -83,8 +83,8 @@ export async function login(req, res) {
         const token = generateAccessToken(user._id, user.role);
         
         // ответ токном
-        // return res.json({token, message: 'Авторизация прошла успешно'});
-        return res.json({token});
+        return res.json({token, message: 'Авторизация прошла успешно'});
+
         
 
     } catch (error) {

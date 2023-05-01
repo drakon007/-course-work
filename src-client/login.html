@@ -81,33 +81,28 @@
                 e.preventDefault();
 
                 const users = await alluser();
-                console.log(users)
 
                 const username = document.forms['login'].username.value,
                     password = document.forms['login'].password.value;
-
-                console.log(username);
-                console.log(password);
 
                 if (!username || !password) {
                     return Errors.innerHTML = "заполните все поля";
                 }
 
-                let i = 1;
                 for (let user of users) {
-                    console.log(i)
-                    i++
-                    console.log(user.name)
                    
                     if (user.name == username) {
+
                         const data = {
                             'name': username,
                             'password': password
                         };
                         login(data);
                         window.sessionStorage.setItem('name', username);
+
                     }
                     else {
+
                         Errors.innerHTML = "Такого пользователя не существует";
                     }
                    

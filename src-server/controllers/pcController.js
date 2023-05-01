@@ -44,13 +44,12 @@ export async function getOne(req, res) {
 
 }
 
-
 // ping 
 export async function pingOne(req, res) {
 
     try {
 
-      let host = "10.100.3.3";
+      let host = "fs";
       let resPC = await ping.promise.probe(host, {
          timeout: 1, //время отправки
       });
