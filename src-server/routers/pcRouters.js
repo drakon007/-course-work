@@ -7,6 +7,8 @@ pcRouter.get("/getall", pcController.getAll);
 
 pcRouter.get("/getone", pcController.getOne);
 
+pcRouter.post("/creatpc", pcController.createPc);
+
 pcRouter.get("/pingone", pcController.pingOne);
 
 pcRouter.get("/pingall", pcController.pingAll);

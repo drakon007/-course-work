@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const PcSchema = new mongoose.Schema({
     name: { type: String, required: true},
     ip: { type: String},
-    mac: { type: String},
     lasttime: { type: Date }
 });
 

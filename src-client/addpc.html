@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/output.css">
+    <title>addpc</title>
+
+</head>
+
+<body class="bg-bgpage">
+
+    <!--
+    !!!перекинуть в js шапку!!!
+    добавить иконки на тему и выход
+    -->
+
+    <!--шапка-->
+    <header class="text-white flex justify-between">
+
+        <div class="flex gap-2 ml-6">
+            <!--лого-->
+            <div></div>
+            <h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Главная</h2>
+            <h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Настройки</h2>
+            <button class="border-bgbut border-solid border-2 hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Тема</button>
+        </div>
+
+        <div class="gap-2 mr-6 ">
+            <button class="bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Выход (имя)</button>
+        </div>
+
+    </header>
+
+    <main class="flex flex-wrap mx-auto w-6/12 bg-bgform rounded-xl mt-6 min-h-table ">
+        
+            <div class="form w-full p-6 mx-auto">
+            
+                <p class="text-white text-2xl">Добавление нового компьютера</p>
+    
+                <form id="addpc_form" name="addpc" class="form flex h-cform w-full mx-auto flex-col rounded-xl bg-bgform p-4 mt-2">
+                    <div class="w-full flex ">
+                        <div class="bg-dark-gray p-1.5 rounded-l-xl"><p class="text-white p-1">Введите адрес или имя</p></div>
+                        <input class="p-1.5 w-full  rounded-r-xl">
+                    </div>
+        
+                    <button class="text-white  bg-very-dark-gray my-1 mt-2 p-1 rounded-xl">Добавить</button>
+                </form>
+
+            </div>
+    
+            <div class="form w-full p-12 mx-auto">
+                <div class="information bg-dark-blue rounded-r-xl">
+                    <h1 class="text-white pt-3 pl-3 text-base">Внимание:</h1>
+                    <ol class="text-white pl-9 list-decimal pb-3">
+                        <li>Проверьте включен ли компьютер который вы пытаетесь добавить</li>
+                        <li>Проверьте подключен ли компьютер к сети</li>
+                            <ul class="list-disc pl-3">
+                                <li>В меню дополнительно скоро появятся новые пункты</li>
+                            </ul>
+                    </ol>
+                </div>
+            </div>     
+       
+    </main>
+
+</body>
+</html>

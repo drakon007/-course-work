@@ -2,12 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import ping from "ping";
 
-import { User } from "../models/User.js";
-import { Role } from "../models/Role.js";
 import { Pc } from "../models/Pc.js";
-
-const SECRET_KEY = process.env.SECRET_KEY;
-const  secret = `${SECRET_KEY}`;
 
 export async function getAll(req, res) {
 
@@ -19,8 +14,8 @@ export async function getAll(req, res) {
 
      } catch (error) {
 
-        console.log(error, "ошибка нет токена авторизации");
-        return res.status(403).json({ message: "У вас нет доступа сюда" });
+      console.log(error, "ошибка нет токена авторизации");
+      return res.status(403).json({ message: "У вас нет доступа сюда" });
 
      }
 
@@ -29,6 +24,10 @@ export async function getAll(req, res) {
 export async function getOne(req, res) {
 
    const pcId = req.params.id;
+
+   if (!pcId) {
+      return res.status(400).json({ message: "Не полученны данные о пк, возможно он выключен" });
+   }
 
     try {
    
@@ -44,17 +43,57 @@ export async function getOne(req, res) {
 
 }
 
+export async function createPc(req, res) {
+   const { name } = req.body;
+
+   if (!name) {
+      return res.status(400).json({ message: "не полученно имя пк, проверьте правильность запроса"});
+   }
+
+   const arr = pingDorname(name);
+
+   if (!arr || arr[0] == undefined || arr[0] == false) {
+      return res.status(400).json({ message: "Пк не отвечает на отсравленный запрос, пожадуйста включите пк"});
+   }
+
+   const ip = arr[1];
+
+   const lasttime = new Date();
+
+   const pc = new Pc({name, ip, lasttime});
+   await pc.save();
+
+   return res.status(200).json({ message: "ПК добавлен в систему"});
+}
+
+async function pingDorname(namePc) {
+
+   let arr = [];
+   let resPC = await ping.promise.probe(namePc, {
+      timeout: 1, //время отправки
+   });
+   arr.push(resPC.alive);
+   arr.push(resPC.numeric_host);
+
+   return arr;
+
+}
+
 // ping 
 export async function pingOne(req, res) {
 
     try {
 
-      let host = "fs";
-      let resPC = await ping.promise.probe(host, {
+      const { name } = req.body;
+      if (!name) {
+         return res.status(400).json({ message: "Не получено название или адрес пк"});
+      }
+
+      let resPC = await ping.promise.probe(name, {
          timeout: 1, //время отправки
       });
-
-      return res.status(200, {'Content-Type': 'text/html; charset=utf-8'}).json(resPC);
+      // console.log(resPS);
+      return res.status(200, {'Content-Type': 'text/html; charset=utf-8'}).json(resPC.alive);
       
     } catch (error) {
 
@@ -75,8 +114,8 @@ export async function pingAll(req, res)  {
          let res = await ping.promise.probe(host, {
             timeout: 1,
          });
-         console.log(res);
-         arr.push(res)
+         arr.push(res.alive);
+         arr.push(res.numeric_host);
      }  
      
       console.log(arr)
