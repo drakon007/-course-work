@@ -50,6 +50,15 @@ export async function createPc(req, res) {
       return res.status(400).json({ message: "не полученно имя пк, проверьте правильность запроса"});
    }
 
+   const candidate  = await Pc.findOne({ name });
+
+   // проверка на существование пк
+   if (candidate) {
+       return res.status(400).json({
+           error: 'Пк уже существует'
+       });
+   }
+
    const arr = await pingDorname(name);
    
    if (!arr || arr[0] == undefined || arr[0] == false) {
@@ -107,18 +116,23 @@ export async function pingAll(req, res)  {
    
    try {
 
-      let hosts = ["10.100.3.3","10.100.3.4"];
+      let pc =  await Pc.find({},{name: 1, _id: 0});
+
+      let hosts = [];
+      for (let host of pc) {
+         hosts.push(host.name);
+      }
+
       let arr = [];
-      for(let host of hosts){
+      for(let host of hosts) {
          let res = await ping.promise.probe(host, {
             timeout: 1,
          });
          arr.push(res.alive);
          arr.push(res.numeric_host);
      }  
-     
-      console.log(arr)
-      return res.status(200, {'Content-Type': 'text/html; charset=utf-8'}).json(arr);
+      console.log(arr);
+      return res.status(200).json(arr);
       
 
     } catch (error) {
