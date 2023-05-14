@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/output.css">
+        <script defer src="scripts/script.js"></script>
         <title>login</title>
 
     </head>
@@ -15,7 +16,6 @@
         
         <!--контент-->
         <main class="contener h-screen w-screen bg-bgpage flex justify-items-center items-center">
-
 
             <!--поле для формы и лого-->
             <div class="form flex h-cform w-form mx-auto flex-col">
@@ -38,7 +38,7 @@
                     <input class="password w-full rounded-xl mt-2" type="password" id="password" name="password"  placeholder="password" />
 
                     <div class="mt-4"></div>
-                    <button class="bg-bgbut w-full mt-4 rounded-xl py-2 text-white">Вход</button>
+                    <button class="bg-bgbut w-full mt-4 rounded-xl py-2 text-white" id="but-login">Вход</button>
                 
                 </form>
 
@@ -46,71 +46,5 @@
         
         </main>
         
-        <script>
-
-            async function alluser() {
-                const res = await fetch(`http://localhost:5000/user/getall`);
-                return res.json();
-            }
-
-            const form = document.querySelector("#authorization_form"),
-            Errors = document.querySelector("#errors");
-
-            async function login(data) {
-
-                const response = await fetch(`http://localhost:5000/auth/login`, {
-                    'method': "POST",
-                    'headers': {
-                        'Content-type': 'application/json',
-                    },
-                    'body': JSON.stringify(data)
-                });
-
-                const res = await response.json();
-                if (res.token) {
-                    window.sessionStorage.setItem('token', res.token);
-                    window.location.href = `home.html`;
-                } else {
-                    Errors.innerHTML = "Не верный пароль";
-                }
-
-            }
-
-            form.addEventListener('submit', async (e) => {
-                
-                e.preventDefault();
-
-                const users = await alluser();
-
-                const username = document.forms['login'].username.value,
-                    password = document.forms['login'].password.value;
-
-                if (!username || !password) {
-                    return Errors.innerHTML = "заполните все поля";
-                }
-
-                for (let user of users) {
-                   
-                    if (user.name == username) {
-
-                        const data = {
-                            'name': username,
-                            'password': password
-                        };
-                        login(data);
-                        window.sessionStorage.setItem('name', username);
-
-                    }
-                    else {
-
-                        Errors.innerHTML = "Такого пользователя не существует";
-                    }
-                   
-                }
-    
-            })
-
-        </script>
-
     </body>
 </html>

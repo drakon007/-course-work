@@ -9,6 +9,6 @@ pcRouter.get("/getone", pcController.getOne);
 
 pcRouter.post("/creatpc", pcController.createPc);
 
-pcRouter.get("/pingone", pcController.pingOne);
+pcRouter.post("/pingone", pcController.pingOne);
 
 pcRouter.get("/pingall", pcController.pingAll);

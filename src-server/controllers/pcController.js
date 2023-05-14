@@ -116,30 +116,41 @@ export async function pingAll(req, res)  {
    
    try {
 
-      let pc =  await Pc.find({},{name: 1, _id: 0});
+      let arrPC = [];
+
+      const pc = await Pc.find();
 
       let hosts = [];
       for (let host of pc) {
          hosts.push(host.name);
       }
 
-      let arr = [];
+      let live = [];
       for(let host of hosts) {
          let res = await ping.promise.probe(host, {
             timeout: 1,
          });
-         arr.push(res.alive);
-         arr.push(res.numeric_host);
-     }  
-      console.log(arr);
-      return res.status(200).json(arr);
-      
+         live.push(res.alive);
+         live.push(res.numeric_host);
+      }
 
-    } catch (error) {
+      for (let i=0 , j=0; i < pc.length; i++, j+=2) {
+         
+         arrPC.push(
+            {
+               name: pc[i].name,
+               ip: pc[i].ip,
+               lasttime: pc[i].lasttime,
+               isAlive: live[j]
+            }) 
+      }
 
-       console.log(error, "ошибка нет токена авторизации");
-       return res.status(403).json({ message: "У вас нет доступа сюда" });
+      return res.status(200).json(arrPC);
 
-    }
+     } catch (error) {
 
+      console.log(error, "ошибка нет токена авторизации");
+      return res.status(403).json({ message: "У вас нет доступа сюда" });
+
+     }
 }
