@@ -47,22 +47,20 @@ export async function createPc(req, res) {
    const { name } = req.body;
 
    if (!name) {
-      return res.status(400).json({ message: "не полученно имя пк, проверьте правильность запроса"});
+      return res.status(400).json({ error: "не полученно имя пк, проверьте правильность запроса"});
    }
 
    const candidate  = await Pc.findOne({ name });
 
    // проверка на существование пк
    if (candidate) {
-       return res.status(400).json({
-           error: 'Пк уже существует'
-       });
+       return res.status(400).json({error: "Пк уже существует"});
    }
 
    const arr = await pingDorname(name);
    
    if (!arr || arr[0] == undefined || arr[0] == false) {
-      return res.status(400).json({ message: "Пк не отвечает на отсравленный запрос, пожадуйста включите пк"});
+      return res.status(400).json({ error: "Пк не отвечает на отправленный запрос, пожадуйста включите пк"});
    }
 
    const ip = arr[1]; 

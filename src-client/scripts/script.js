@@ -62,6 +62,26 @@ async function login(data, Errors) {
 
 }
 
+async function pc(data, Errors) {
+
+    const response = await fetch(`http://localhost:5000/pc/creatpc`, {
+        'method': "POST",
+        'headers': {
+            'Content-type': 'application/json',
+        },
+        'body': JSON.stringify(data)
+    });
+
+    const res = await response.json();
+    
+    if (res.message) {
+        window.location.href = `home.html`;
+    } else {
+        Errors.innerHTML = res.error;
+    }
+
+}
+
 async function displayListHomePage() {
     authorizationCheck();
     const persCompAll = await allpc();
@@ -134,10 +154,10 @@ switch (openPage()) {
 
         break;
     case 'login.html':
-        const form = document.querySelector("#authorization_form"),
-            Errors = document.querySelector("#errors");
+        const formlogin = document.querySelector("#authorization_form"),
+            Errorslogin = document.querySelector("#errors");
 
-            form.addEventListener('submit', async (e) => {
+            formlogin.addEventListener('submit', async (e) => {
                 
                 e.preventDefault();
 
@@ -147,7 +167,7 @@ switch (openPage()) {
                     password = document.forms['login'].password.value;
 
                 if (!username || !password) {
-                    return Errors.innerHTML = "заполните все поля";
+                    return Errorslogin.innerHTML = "заполните все поля";
                 }
 
                 for (let user of users) {
@@ -158,18 +178,41 @@ switch (openPage()) {
                             'name': username,
                             'password': password
                         };
-                        login(data, Errors);
+                        login(data, Errorslogin);
                         window.sessionStorage.setItem('name', username);
 
                     }
                     else {
-                        Errors.innerHTML = "Такого пользователя не существует";
+                        Errorslogin.innerHTML = "Такого пользователя не существует";
                     }
                    
                 }
     
             })
             break;
+    case 'addpc.html':
+        const formadd = document.querySelector("#addpc_form"),
+        Errorsadd = document.querySelector("#errors_addpc");
+        
+        formadd.addEventListener('submit', async (e) => {
+                
+            e.preventDefault();
+
+            const namepc = document.forms['addpc'].namepc.value;
+            console.log(namepc);
+            if (!namepc ) {
+                return Errorsadd.innerHTML = "Введите адрес или имя пк";
+            } else {
+                const data = {
+                    'name': namepc,
+                };
+                pc(data, Errorsadd);
+            }
+
+        })
+        break;
+
+
 }
 
 
