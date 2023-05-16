@@ -18,6 +18,30 @@ async function alluser() {
     return res.json();
 }
 
+function displayHeaders() {
+    const content = document.querySelector("header");
+    content.innerHTML ="";
+    const name = sessionStorage.getItem("name");
+    const addPc = 
+    `
+    <div class="flex gap-2 ml-6">
+    <!--лого-->
+    <div></div>
+    <a href="home.html"><h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Главная</h2></a>
+    <a href="addpc.html"><h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Добавить ПК</h2></a>
+    <a href="adduser.html"><h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Добавить пользователя</h2></a>
+    <button class="border-bgbut border-solid border-2 hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Тема</button>
+    </div>
+
+    <div class="gap-2 mr-6 ">
+        <button class="bg-bgbut px-2.5 py-0.5 m-2 rounded-xl" onclick="delet()">Выход ${name}</button>
+    </div>
+
+    `;
+
+    content.innerHTML += addPc;
+}
+
 function authorizationCheck() {
     let token = sessionStorage.getItem('token');
 
@@ -62,6 +86,25 @@ async function login(data, Errors) {
 
 }
 
+async function register(data, Errors) {
+
+    const response = await fetch(`http://localhost:5000/auth/register`, {
+        'method': "POST",
+        'headers': {
+            'Content-type': 'application/json',
+        },
+        'body': JSON.stringify(data)
+    });
+
+    const res = await response.json();
+    if (res.message) {
+        window.location.href = `home.html`;
+    } else {
+        Errors.innerHTML = res.error;
+    }
+
+}
+
 async function pc(data, Errors) {
 
     const response = await fetch(`http://localhost:5000/pc/creatpc`, {
@@ -83,7 +126,7 @@ async function pc(data, Errors) {
 }
 
 async function displayListHomePage() {
-    authorizationCheck();
+    displayHeaders();
     const persCompAll = await allpc();
     const content = document.querySelector("#content");
     content.innerHTML ="";
@@ -94,7 +137,7 @@ async function displayListHomePage() {
 
         const addPc = 
         `
-            <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" id="${pc._id}">
+            <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6 w-250 h-150" id="${pc._id}">
 
     
             <div class="mt-2 ml-4 mb-1 flex justify-between"><button><img src="img/power-off.png" alt="картинка не прогрузилась" class="w-35 h-35"> <button><img src="img/menu.png" alt="картинка не прогрузилась" class="w-35 h-35"></button></div>
@@ -112,6 +155,10 @@ async function displayListHomePage() {
     }
 }
 
+function delet() {
+        window.sessionStorage.removeItem('token');
+}
+
 async function displayListHomePageLastPing() {
     const persCompAll = await pingall();
     const content = document.querySelector("#content");
@@ -121,15 +168,18 @@ async function displayListHomePageLastPing() {
         
         let arr = date(pc.lasttime);
         let strBut
+        let strData
         if (pc.isAlive == true) {
            strBut = "power-on.png";
+           strData ="В сети";
         } else {
            strBut = "power-off.png";
+           strData = " Был в сети: " + arr[0] + ":" + arr[1] + ":" + arr[2];
         }
          
         const addPc = 
         `
-            <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" id="${pc._id}">
+            <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6 w-250 h-150" id="${pc._id}">
 
     
             <div class="mt-2 ml-4 mb-1 flex justify-between"><button><img src="img/${strBut}" alt="картинка не прогрузилась" class="w-35 h-35"> <button><img src="img/menu.png" alt="картинка не прогрузилась" class="w-35 h-35"></button></div>
@@ -137,7 +187,7 @@ async function displayListHomePageLastPing() {
             <p class="ml-6 text-tgray">${pc.ip}</p>
 
             <div></div>
-            <p class="ml-6 text-tgray mr-6 w-4/5">${" Был в сети: " + arr[0] + ":" + arr[1] + ":" + arr[2]}</p>
+            <p class="ml-6 text-tgray mr-6 w-4/5">${strData}</p>
 
             </div>
 
@@ -147,8 +197,12 @@ async function displayListHomePageLastPing() {
     }
 }
 
+
+
 switch (openPage()) {
     case 'home.html':
+        setInterval(authorizationCheck, 1000);
+        displayHeaders();
         displayListHomePage();
         setInterval(displayListHomePageLastPing, 4000);
 
@@ -191,6 +245,8 @@ switch (openPage()) {
             })
             break;
     case 'addpc.html':
+        setInterval(authorizationCheck, 1000);
+        displayHeaders();
         const formadd = document.querySelector("#addpc_form"),
         Errorsadd = document.querySelector("#errors_addpc");
         
@@ -211,7 +267,38 @@ switch (openPage()) {
 
         })
         break;
+    case 'adduser.html':
+        setInterval(authorizationCheck, 1000);
+        displayHeaders();
+        const formadduser = document.querySelector("#adduser_form"),
+        Errorsadduser = document.querySelector("#errors_adduser");
 
+        formadduser.addEventListener('submit', async (e) => {
+            
+            e.preventDefault();
+
+            const username = document.forms['adduser'].username.value,
+                password1 = document.forms['adduser'].password1.value,
+                password2 = document.forms['adduser'].password2.value;
+
+            if (!username || !password1 || !password2) {
+                return Errorsadduser.innerHTML = "заполните все поля";
+            }
+            console.log(password1);
+            console.log(password2);
+            if (password1 != password2) {
+                return Errorsadduser.innerHTML = "пароли не совпадают";
+            }
+
+            const data = {
+                'name': username,
+                'password': password1
+            };
+            register(data, Errorsadduser);
+
+
+        })
+        break;
 
 }
 

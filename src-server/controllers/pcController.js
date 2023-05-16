@@ -60,7 +60,7 @@ export async function createPc(req, res) {
    const arr = await pingDorname(name);
    
    if (!arr || arr[0] == undefined || arr[0] == false) {
-      return res.status(400).json({ error: "Пк не отвечает на отправленный запрос, пожадуйста включите пк"});
+      return res.status(400).json({ error: "Пк не отвечает на отправленный запрос, пожалуйста включите пк"});
    }
 
    const ip = arr[1]; 

@@ -31,9 +31,7 @@ export async function register(req, res) {
 
         // проверка на существование пользователя
         if (candidate) {
-            return res.status(400).json({
-                error: 'Пользователь уже существует'
-            });
+            return res.status(400).json({error: 'Пользователь уже существует'});
         }
 
         // хеширование пароля
@@ -52,9 +50,7 @@ export async function register(req, res) {
     } catch (error) {
 
         // отклик серверной части пользователю
-        res.status(400).json({
-            error: 'Ошибка при регистрации пользователя'
-        });
+        res.status(400).json({error: 'Ошибка при регистрации пользователя'});
 
     }
 }

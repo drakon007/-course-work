@@ -8,25 +8,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/output.css">
         <script defer src="scripts/script.js"></script>
-        <title>login</title>
+        <title>registration</title>
 
     </head>
 
-    <body>
+    <body class="bg-bgpage">
         
+        <header class="text-white flex justify-between">
+    
+        </header>
+
         <!--контент-->
-        <main class="contener h-screen w-screen bg-bgpage flex justify-items-center items-center">
+        <main class="contener h-table w-full flex justify-items-center items-center">
 
             <!--поле для формы и лого-->
             <div class="form flex h-cform w-form mx-auto flex-col">
 
                 <!--лого-->
-                <div class="text-white text-center">Name web-program</div>
+                <div class="text-white text-center">Добавление нового пользователя</div>
                 <!--поле ошибки-->
-                <span id="errors" class="text-white text-center text-2xl"></span>
+                <span id="errors_adduser" class="text-white text-center text-2xl"></span>
 
                 <!--форма отправки-->
-                <form id="authorization_form" name="login" class="form flex h-cform w-form mx-auto flex-col rounded-xl bg-bgform p-4 mt-6">
+                <form id="adduser_form" name="adduser" class="form flex h-cform w-form mx-auto flex-col rounded-xl bg-bgform p-4 mt-6">
 
                     <!--name-->
                     <label class="text-white ml-6">Имя пользователя</label>
@@ -35,7 +39,12 @@
                     <!--password-->
                     <div class="mt-4"></div>
                     <label class="text-white ml-6">Пароль пользователя</label>
-                    <input class="password w-full rounded-xl mt-2" type="password" id="password" name="password"  placeholder="password" />
+                    <input class="password w-full rounded-xl mt-2" type="password" id="password1" name="password1"  placeholder="password" />
+
+                    <!--password-->
+                    <div class="mt-4"></div>
+                    <label class="text-white ml-6">Пароль пользователя</label>
+                    <input class="password w-full rounded-xl mt-2" type="password" id="password2" name="password2"  placeholder="password" />
 
                     <div class="mt-4"></div>
                     <button class="bg-bgbut w-full mt-4 rounded-xl py-2 text-white">Вход</button>

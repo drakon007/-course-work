@@ -14,25 +14,8 @@
 
 <body class="bg-bgpage">
 
- <!--
-    !!!перекинуть в js шапку!!!
-    добавить иконки на тему и выход
-    -->
-
-    <!--шапка-->
+ 
     <header class="text-white flex justify-between">
-
-        <div class="flex gap-2 ml-6">
-            <!--лого-->
-            <div></div>
-            <a href="home.html"><h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Главная</h2></a>
-            <a href="addpc.html"><h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Добавить</h2></a>
-            <button class="border-bgbut border-solid border-2 hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Тема</button>
-        </div>
-
-        <div class="gap-2 mr-6 ">
-            <button class="bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Выход (имя)</button>
-        </div>
 
     </header>
 
@@ -48,7 +31,7 @@
                     <input class="p-1.5 w-full rounded-r-xl" type="text" id="namepc"  name="namepc">
                 </div>
     
-                <button class="text-white  bg-very-dark-gray my-1 mt-2 p-1 rounded-xl">Добавить</button>
+                <button class="text-white bg-very-dark-gray my-1 mt-2 p-1 rounded-xl">Добавить</button>
             </form>
 
         </div>
@@ -68,8 +51,9 @@
 
     </main>
 
+    <div  class="flex flex-wrap mx-auto w-6/12 mt-6 min-h-table">  <span id="errors_addpc" class=" text-center text-white text-center text-2xl mb-2 ml-4"></span></div>
      <!--поле ошибки-->
-     <span id="errors_addpc" class=" text-center text-white text-center text-2xl mb-2 ml-4"></span>
+    
 
 </body>
 </html>
