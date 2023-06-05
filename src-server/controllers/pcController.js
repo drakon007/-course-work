@@ -147,8 +147,62 @@ export async function pingAll(req, res)  {
 
      } catch (error) {
 
-      console.log(error, "ошибка нет токена авторизации");
+      console.log(error, "ошибка, нет токена авторизации");
       return res.status(403).json({ message: "У вас нет доступа сюда" });
 
      }
+}
+
+export async function deletePc (req, res) {
+
+   const pcId = req.params.id;
+
+   try {
+
+      if (!pcId) {
+         return res.status(400).json({ message: "Данного Пк уже не существует" });         
+      }
+
+      const delPc = await Pc.findByIdAndDelete(pcId);
+      return res.status(200).json(delPc);
+      
+   } catch (error) {
+
+      console.log(error, "ошибка, нет токена авторизации");
+      return res.status(403).json({ message: "У вас нет доступа сюда"});
+
+   }
+
+}
+
+export async function appdatePc (req, res) {
+
+   const pcId = req.params.id;
+
+   try {
+      
+      if (!pcId) {
+         return res.status(400).json({ message: "Данного Пк не существует" });         
+      }
+
+      const { name } = req.body;
+      if (!pcId) {
+         return res.status(400).json({ message: "имя" });         
+      }
+
+      const candidate  = await Pc.findOne({ name });
+
+      // проверка на существование пк
+      if (candidate) {
+          return res.status(400).json({error: "Пк уже существует"});
+      }
+      
+
+   } catch (error) {
+      
+      console.log(error, "ошибка, нет токена авторизации");
+      return res.status(403).json({ message: "У вас нет доступа сюда"});
+
+   }
+
 }
