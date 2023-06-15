@@ -137,14 +137,14 @@ async function displayListHomePage() {
 
         const addPc = 
         `
-            <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6 w-250 h-150" id="${pc._id}">
+            <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" style="width: 250px; height: 150px;" id="${pc._id}">
 
     
-            <div class="mt-2 ml-4 mb-1 flex justify-between"><button><img src="img/power-off.png" alt="картинка не прогрузилась" class="w-35 h-35"> <button><img src="img/menu.png" alt="картинка не прогрузилась" class="w-35 h-35"></button></div>
+            <div class="mt-2 ml-4 mb-1 flex justify-between"><button><img src="img/power-off.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"> <button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"></button></div>
             <h1 class="text-white text-xl ml-6">${pc.name}</h1>
             <p class="ml-6 text-tgray">${pc.ip}</p>
 
-            <div></div>
+           
             <p class="ml-6 text-tgray mr-6 w-4/5">${" Был в сети: " + arr[0] + ":" + arr[1] + ":" + arr[2]}</p>
 
             </div>
@@ -179,14 +179,15 @@ async function displayListHomePageLastPing() {
          
         const addPc = 
         `
-            <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6 w-250 h-150" id="${pc._id}">
+            <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" style="width: 250px; height: 150px;" id="${pc._id}">
 
     
-            <div class="mt-2 ml-4 mb-1 flex justify-between"><button><img src="img/${strBut}" alt="картинка не прогрузилась" class="w-35 h-35"> <button><img src="img/menu.png" alt="картинка не прогрузилась" class="w-35 h-35"></button></div>
+            <div class="mt-2 ml-4 mb-1 flex justify-between"><button><img src="img/${strBut}" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"> <button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"></button></div>
+
             <h1 class="text-white text-xl ml-6">${pc.name}</h1>
             <p class="ml-6 text-tgray">${pc.ip}</p>
 
-            <div></div>
+
             <p class="ml-6 text-tgray mr-6 w-4/5">${strData}</p>
 
             </div>
