@@ -1,8 +1,7 @@
-import * as dotenv from "dotenv";
-dotenv.config();
 import ping from "ping";
-
 import { Pc } from "../models/Pc.js";
+import * as pingMiddleware from "../middlewaree/pingMiddleware.js";
+
 
 export async function getAll(req, res) {
 
@@ -73,17 +72,17 @@ export async function createPc(req, res) {
    return res.status(200).json({ message: "ПК добавлен в систему"});
 }
 
-async function pingDorname(namePc) {
+// async function pingDorname(namePc) {
 
-   let arr = [];
-   let resPC = await ping.promise.probe(namePc, {
-      timeout: 1, //время отправки
-   });
-   arr.push(resPC.alive);
-   arr.push(resPC.numeric_host);
-   return arr;
+//    let arr = [];
+//    let resPC = await ping.promise.probe(namePc, {
+//       timeout: 1, //время отправки
+//    });
+//    arr.push(resPC.alive);
+//    arr.push(resPC.numeric_host);
+//    return arr;
 
-}
+// }
 
 // ping 
 export async function pingOne(req, res) {
@@ -156,6 +155,7 @@ export async function pingAll(req, res)  {
 export async function deletePc (req, res) {
 
    const pcId = req.params.id;
+   console.log(pcId);
 
    try {
 
@@ -191,12 +191,23 @@ export async function appdatePc (req, res) {
       }
 
       const candidate  = await Pc.findOne({ name });
-
+      
       // проверка на существование пк
       if (candidate) {
           return res.status(400).json({error: "Пк уже существует"});
       }
-      
+
+      const arr = await pingDorname(name);
+   
+      if (!arr || arr[0] == undefined || arr[0] == false) {
+         return res.status(400).json({ error: "Пк не отвечает на отправленный запрос, пожалуйста включите пк"});
+      }
+
+      const ip = arr[1]; 
+      const lasttime = new Date();
+
+      const newpc = await Pc.findByIdAndUpdate(pcId, {name, ip, lasttime});
+      return res.json(newpc);
 
    } catch (error) {
       

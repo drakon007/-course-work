@@ -13,6 +13,6 @@ pcRouter.post("/pingone", pcController.pingOne);
 
 pcRouter.get("/pingall", pcController.pingAll);
 
-pcRouter.delete("/deletepc/:id", pcController.deletePc);
+pcRouter.delete("/delete/:id", pcController.deletePc);
 
-pcRouter.put("/setpc", pcController.appdatePc);
+pcRouter.put("/update/:id", pcController.appdatePc);
