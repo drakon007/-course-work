@@ -12,6 +12,7 @@ import fileUpload from 'express-fileupload';
 import { authRouter } from './routers/authRouters.js';
 import { pcRouter } from './routers/pcRouters.js';
 import { userRouter } from './routers/userRouters.js';
+import { groupRouter } from './routers/groupRouters.js';
 
 // внешние переменные созданного хоста
 const HOST = process.env.HOST;
@@ -32,6 +33,7 @@ app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/pc', pcRouter);
 app.use('/user', userRouter);
+app.use('/group', groupRouter);
 
 
 // функция для подключения к базе данных

@@ -145,7 +145,7 @@ async function displayListHomePage() {
             <p class="ml-6 text-tgray">${pc.ip}</p>
 
            
-            <p class="ml-6 text-tgray mr-6 w-4/5">${" Был в сети: " + arr[0] + ":" + arr[1] + ":" + arr[2]}</p>
+            <p class="ml-6 text-tgray mr-6 w-4/5">${" Был в сети: " + arr[0] + "." + arr[1] + "." + arr[2]}</p>
 
             </div>
 
@@ -174,7 +174,7 @@ async function displayListHomePageLastPing() {
            strData ="В сети";
         } else {
            strBut = "power-off.png";
-           strData = " Был в сети: " + arr[0] + ":" + arr[1] + ":" + arr[2];
+           strData = " Был в сети: " + arr[0] + "." + arr[1] + "." + arr[2];
         }
          
         const addPc = 
@@ -256,7 +256,7 @@ switch (openPage()) {
             e.preventDefault();
 
             const namepc = document.forms['addpc'].namepc.value;
-            console.log(namepc);
+            
             if (!namepc ) {
                 return Errorsadd.innerHTML = "Введите адрес или имя пк";
             } else {
@@ -285,8 +285,7 @@ switch (openPage()) {
             if (!username || !password1 || !password2) {
                 return Errorsadduser.innerHTML = "заполните все поля";
             }
-            console.log(password1);
-            console.log(password2);
+        
             if (password1 != password2) {
                 return Errorsadduser.innerHTML = "пароли не совпадают";
             }

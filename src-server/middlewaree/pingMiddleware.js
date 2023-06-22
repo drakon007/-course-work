@@ -1,55 +1,53 @@
 import ping from 'ping';
+import { Pc } from "../models/Pc.js";
 
 /*
 get status and ip one pc in array
 # array = [status, ip]
 */
-export default async function pingOneByName(namePc) {
+export async function pingOneByName(namePc) {
     let arr = []; 
-    let resPC = await ping.promise.probe(namePc, {
+    let Pc = await ping.promise.probe(namePc, {
        timeout: 1, //time ping
     });
-    arr.push(resPC.alive); //add in arr
-    arr.push(resPC.numeric_host);
+    //add info for pc in arr
+    arr.push(Pc.alive);
+    arr.push(Pc.numeric_host);
     return arr;
 }
 
 /*
-get status and ip many pc in array
-# array = [status1, ip2, status2, ip2 ... statusN, ipN]
+get name, ip, lasttime, isAlive
+# array = [name1, ip1, lasttime1, isAlive1 ... nameN, ipN, lasttimeN, isAliveN]
 */
-export default async function pingManyPcByNameIngroup(arrNamePc) {
+export async function pingAllPcByNameAndCheckLive() {
 
-    try {
-        let arrPcFinish = [];
+    let arrPc = [];
 
-        for (let host of arrNamePc) {
-            
-        }
+    const pc = await Pc.find();
 
-        // let live = [];
-        // for(let host of hosts) {
-        //    let res = await ping.promise.probe(host, {
-        //       timeout: 1,
-        //    });
-        //    live.push(res.alive);
-        //    live.push(res.numeric_host);
-        // }
+    let hosts = [];
+    for (let host of pc) {
+        hosts.push(host.name);
+    }
 
-        // for (let i=0 , j=0; i < pc.length; i++, j+=2) {
-           
-        //    arrPC.push(
-        //       {
-        //          name: pc[i].name,
-        //          ip: pc[i].ip,
-        //          lasttime: pc[i].lasttime,
-        //          isAlive: live[j]
-        //       }) 
-        // }
-        // return arrPC;
-       } catch (error) {
-        console.log(error, "ошибка, запрос на все ПК");
-        return res.status(403).json({ message: "У вас нет доступа сюда" });
-       }
+    let live = [];
+    for(let host of hosts) {
+        let res = await ping.promise.probe(host, {
+        timeout: 1});
+        live.push(res.alive);
+        live.push(res.numeric_host);
+    }
 
+    for (let i=0 , j=0; i < pc.length; i++, j+=2) {
+        arrPc.push(
+        {
+            name: pc[i].name,
+            ip: pc[i].ip,
+            lasttime: pc[i].lasttime,
+            isAlive: live[j]
+        }) 
+    }
+
+    return arrPc;
 }
