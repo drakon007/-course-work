@@ -40,10 +40,24 @@ export async function createGroup(req, res) {
             return res.status(403).json({message: "Введите имя Пк"}); 
         }
         const candidates = await Group.find({name});
-        if (!candidates) {
-            return res.status(403).json({message: "Группа уже существует"}); 
+        if (candidates.length == 1) {
+            return res.status(400).json({message: "Группа уже существует"}); 
         }
 
+        if (typeof(namespc) == "string") {
+            let checkPc = await Pc.find({name: namespc});
+            if (checkPc.length == 0) {
+                return res.status(403).json({message: "Введен не существующий пк"}); 
+            }
+        } else {
+            for (let pc of namespc) {
+                let checkPc = await Pc.find({name: pc});
+                if (checkPc.length == 0) {
+                    return res.status(403).json({message: "Введен не существующий пк"}); 
+                }
+            }
+        }
+       
         const group = new Group({name, namespc});
         await group.save();
 
@@ -86,17 +100,27 @@ export async function addInGroup(req, res) {
             return res.status(403).json({message: "Группы не существует"}); 
         }
 
-        console.log(typeof(candidates));
-        console.log(candidates);
-        console.log(candidates.name);
-        // candidates.push({
-        //     name: candidates.name,
-        //     namespc: candidates.namespc + namespc
-        // });
-        // console.log(candidates);
-       // const newgroup = await findUpdate({name, {namespc: [candidates.namespc]}})
-        return res.status(200).json({message: 'dfdfa'});
-
+        if (typeof(namespc) == "string") {
+            let checkPc = await Pc.find({name: namespc});
+            if (checkPc.length == 0) {
+                return res.status(403).json({message: "Введен не существующий пк"}); 
+            }
+            candidates[0].namespc.push(namespc);
+            let newNamePc = Array.from(new Set(candidates[0].namespc));
+            const newGroup = await Group.findOneAndUpdate({name: candidates[0].name}, {namespc: newNamePc})
+            return res.status(200).json({message: "Группа обнавлена перезагрузите страницу"})
+        } else {
+            for (let pc of namespc) {
+                let checkPc = await Pc.find({name: pc});
+                if (checkPc.length == 0) {
+                    return res.status(403).json({message: "Введен не существующий пк"}); 
+                }
+                candidates[0].namespc.push(pc);
+            }
+            let newNamePc = Array.from(new Set(candidates[0].namespc));
+            const newGroup = await Group.findOneAndUpdate({name: candidates[0].name}, {namespc: newNamePc})
+            return res.status(200).json({message: "Группа обнавлена перезагрузите страницу"})
+        }
     } catch (error) {
        console.log(error);
        return res.status(403).json({message: "У вас нет доступа сюда"}); 
@@ -106,10 +130,6 @@ export async function addInGroup(req, res) {
 export async function deletInGroup(req, res) {
     try {
 
-        const groupId = req.params.id;
-        if (!groupId) {
-            res.status(403).json({message: "Такой группы не существует"});
-        }
         const { name, namespc } = req.body;
         if (!name) {
             return res.status(403).json({message: "Введите название группы"}); 
@@ -121,9 +141,13 @@ export async function deletInGroup(req, res) {
         if (!candidates) {
             return res.status(403).json({message: "Группа уже существует"}); 
         }
-        console.log(candidates);
-
-
+        if (typeof(namespc) == "string") {
+            let oldNamePc = candidates[0].namespc;
+            let newNamePc = oldNamePc.filter((oldNamePc) => oldNamePc !== namespc )
+            // candidates[0].namespc = newNamePc;
+            const newGroup = await Group.findOneAndUpdate( {name: candidates[0].name}, {namespc: newNamePc})
+            return res.status(200).json({message: "Группа обнавлена перезагрузите страницу"})
+        }
 
     } catch (error) {
        console.log(error);
