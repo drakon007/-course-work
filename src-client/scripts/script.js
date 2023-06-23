@@ -153,6 +153,15 @@ async function displayListHomePage() {
 
         content.innerHTML += addPc;
     }
+
+    const addGroup = 
+    `
+    <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6  justify-center items-center" style="width: 250px; height: 150px;">
+    <img onclick="" src="./img/add.png" alt="проверьте интернет" style="width: 75px; height: 75px; margin-left: auto; margin-right:auto; margin-top: 30px">
+    </div>
+
+    `;
+    content.innerHTML += addGroup;
 }
 
 function delet() {
@@ -196,6 +205,14 @@ async function displayListHomePageLastPing() {
 
         content.innerHTML += addPc;
     }
+    const addGroup = 
+    `
+    <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6  justify-center items-center" style="width: 250px; height: 150px;">
+    <img onclick="" src="./img/add.png" alt="проверьте интернет" style="width: 75px; height: 75px; margin-left: auto; margin-right:auto; margin-top: 30px">
+    </div>
+
+    `;
+    content.innerHTML += addGroup;
 }
 
 

@@ -108,7 +108,7 @@ export async function addInGroup(req, res) {
             candidates[0].namespc.push(namespc);
             let newNamePc = Array.from(new Set(candidates[0].namespc));
             const newGroup = await Group.findOneAndUpdate({name: candidates[0].name}, {namespc: newNamePc})
-            return res.status(200).json({message: "Группа обнавлена перезагрузите страницу"})
+            return res.status(200).json({message: "Группа обнавлена перезагрузите страницу"}) //tody
         } else {
             for (let pc of namespc) {
                 let checkPc = await Pc.find({name: pc});
