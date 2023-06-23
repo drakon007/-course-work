@@ -31,7 +31,7 @@ export async function getOne(req, res) {
    
       const pc = await Pc.findById(pcId);
       return res.status(200).json(pc);
-
+      
     } catch (error) {
 
        console.log(error, "ошибка нет токена авторизации");
@@ -74,13 +74,16 @@ export async function createPc(req, res) {
 export async function pingOne(req, res) {
 
     try {
-
-      const { name } = req.body;
+      let isAlive = false;
+      const name = req.params.name;
       if (!name) {
          return res.status(400).json({ message: "Не получено название или адрес пк"});
       }
       let resPc = await pingMiddleware.pingOneByName(name);
-      return res.status(200).json(resPc);
+      if (resPc[0] == true) {
+      isAlive = true;
+      }
+      return res.status(200).json(isAlive);
       
     } catch (error) {
 
@@ -133,18 +136,18 @@ export async function appdatePc (req, res) {
    try {
       
       if (!pcId) {
-         return res.status(400).json({ message: "Данного Пк не существует" });         
+         return res.status(400).json({ error: "Данного Пк не существует" });         
       }
       const { name } = req.body;
       if (!pcId) {
-         return res.status(400).json({ message: "имя" });         
+         return res.status(400).json({ error: "имя" });         
       }
       const candidate  = await Pc.findOne({ name });
       if (candidate) {
           return res.status(400).json({error: "Пк уже существует"});
       }
 
-      const arr = await pingDorname(name);
+      const arr = await pingMiddleware.pingOneByName(name);
    
       if (!arr || arr[0] == undefined || arr[0] == false) {
          return res.status(400).json({ error: "Пк не отвечает на отправленный запрос, пожалуйста включите пк"});
@@ -154,7 +157,7 @@ export async function appdatePc (req, res) {
       const lasttime = new Date();
 
       const newpc = await Pc.findByIdAndUpdate(pcId, {name, ip, lasttime});
-      return res.json(newpc);
+      return res.json({message: "Пк Обнавлен"});
 
    } catch (error) {
       

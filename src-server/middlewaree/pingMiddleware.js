@@ -42,12 +42,12 @@ export async function pingAllPcByNameAndCheckLive() {
     for (let i=0 , j=0; i < pc.length; i++, j+=2) {
         arrPc.push(
         {
+            _id: pc[i]._id,
             name: pc[i].name,
             ip: pc[i].ip,
             lasttime: pc[i].lasttime,
             isAlive: live[j]
         }) 
     }
-
     return arrPc;
 }

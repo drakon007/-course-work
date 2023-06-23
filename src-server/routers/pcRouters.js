@@ -5,11 +5,11 @@ export const pcRouter = Router();
 
 pcRouter.get("/getall", pcController.getAll);
 
-pcRouter.get("/getone", pcController.getOne);
+pcRouter.get("/getone/:id", pcController.getOne);
 
 pcRouter.post("/creatpc", pcController.createPc);
 
-pcRouter.post("/pingone", pcController.pingOne);
+pcRouter.get("/pingone/:name", pcController.pingOne);
 
 pcRouter.get("/pingall", pcController.pingAll);
 

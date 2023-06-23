@@ -5,31 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/output.css">
-    <script defer src="scripts/index.js"></script>
+    <script defer src="scripts/script.js"></script>
     <title>info</title>
 </head>
 <body class="bg-bgpage">
 
-    <!--
-    !!!перекинуть в js шапку!!!
-    добавить иконки на тему и выход
-    -->
-
-    <!--шапка-->
     <header class="text-white flex justify-between">
-
-        <div class="flex gap-2 ml-6">
-            <!--лого-->
-            <div></div>
-            <a href="home.html"><h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Главная</h2></a>
-            <a href="addpc.html"><h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Добавить ПК</h2></a>
-            <a href="adduser.html"><h2 class="hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Добавить пользователя</h2></a>
-            <button class="border-bgbut border-solid border-2 hover:bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Тема</button>
-            </div>
-
-        <div class="gap-2 mr-6 ">
-            <button class="bg-bgbut px-2.5 py-0.5 m-2 rounded-xl">Выход (имя)</button>
-        </div>
 
     </header>
 
@@ -39,43 +20,15 @@
             
             <p class="text-white text-2xl ">Название ПК</p>
             <p class="text-white mt-4 text-base">Основные характеристики:</p>
+            
+            <form name="putpc" id="putForm">
+                <div id="required">
 
-            <div class="required">
-                <div class="w-full flex mt-2">
-                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">Название</p></div>
-                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">workstation name pc 1</p></div>
                 </div>
-                <div class="w-full flex mt-2">
-                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">IP</p></div>
-                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">192.168.1.1</p></div>
-                </div>
-                <div class="w-full flex mt-2">
-                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">MAC</p></div>
-                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">aa:aa:aa:aa:aa:aa</p></div>
-                </div>
-                <div class="w-full flex mt-2">
-                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">Маска</p></div>
-                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">255.255.255.0</p></div>
-                </div>
-               
-            </div>
-
-            <p class="text-white mt-4 text-base">Дополнительно:</p>
-
-            <div class="optional">
-                <!--заполнить дополнительные опции-->
-                <div class="w-full flex mt-2">
-                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">Состояние:</p></div>
-                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">Включен</p></div>
-                </div>
-                <div class="w-full flex justify-between mt-2">
-                    <p class="text-white p-2">Включить пк</p>
-                    <button class="text-white p-2 bg-very-dark-gray rounded-xl border-2 border-black">Включение</button>
-                </div>
-                <div class="w-full flex justify-between mt-2">
-                    <p class="text-white p-2">Выключить пк</p>
-                    <button class="text-white p-2 bg-very-dark-gray rounded-xl border-2 border-black">Выключение</button>
-                </div>
+            </form>
+            <div class="w-full flex justify-between mt-2">
+                <p class="text-white p-2">Удалить пк</p>
+                <button onclick="deletePc()" class="text-white p-2 bg-very-dark-gray rounded-xl border-2 border-black">Удалить</button>
             </div>
         </div>
 
@@ -87,14 +40,133 @@
                     <li>IP адрес на текущийпомент установленный на ПК</li>
                     <li>MAC адрес постоянен всегда, так как присваевается самому устройству</li>
                     <li>Маска помогает определить сеть и конечный хост</li>
-                        <ul class="list-disc pl-3">
-                            <li>В меню дополнительно скоро появятся новые пункты</li>
-                        </ul>
+                    <ul class="list-disc pl-3">
+                        <li>В меню дополнительно скоро появятся новые пункты</li>
+                    </ul>
                 </ol>
             </div>
         </div>
+
+        <div id="errors_putpc"></div>
     </main>
 
+    <script >
+        
+        const formPut = document.querySelector("#putForm"),
+        error = document.querySelector("#errors_putpc"),
+        putpc = document.querySelector("#required");
+        putpc.innerHTML = "";
 
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        let pcId = params.id;
+
+        async function getPcByID(id) {
+            const res = await fetch(`http://localhost:5000/pc/getone/${id}`);
+            return res.json();
+        }
+        async function pingPcByName(name) {
+            const res = await fetch(`http://localhost:5000/pc/pingone/${name}`);
+            return res.json();
+        }
+
+        display();
+        async function display() {
+            const pcInf = await getPcByID(pcId);
+            const addPc = `
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">Название</p></div>
+                    <input value="${pcInf.name}" id='name'  class="name bg-very-dark-gray text-white p-1.5 w-full rounded-r-xl border-2 border-black">
+                </div>
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">IP</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">192.168.1.1</p></div>
+                </div>
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">Состояние:</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">Включен</p></div>
+                </div>
+                <p class="text-white mt-4 text-base">Дополнительно:</p>
+                <div class="w-full flex justify-between mt-2">
+                    <p class="text-white p-2">Изменить имя пк</p>
+                    <button class="text-white p-2 bg-very-dark-gray rounded-xl border-2 border-black">Сохранить</button>
+                </div>
+            `;
+            putpc.innerHTML = addPc;
+        }
+
+        async function displayByPing() {
+            const pcInf = await getPcByID(pcId);
+            const isAlive = await pingPcByName(pcInf.name);
+            let textStatus = ''
+            if (isAlive == false) {
+                 textStatus = "Выключен";
+            } else {
+                 textStatus = "Включен";
+            }
+            const addPc = `
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">Название</p></div>
+                    <input value="${pcInf.name}" id='name' class=" name bg-very-dark-gray text-white p-1.5 w-full rounded-r-xl border-2 border-black">
+                </div>
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">IP</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">192.168.1.1</p></div>
+                </div>
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">Состояние:</p></div>
+                    <div class="bg-very-dark-gray p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">${textStatus}</p></div>
+                </div>
+                <p class="text-white mt-4 text-base">Дополнительно:</p>
+                <div class="w-full flex justify-between mt-2">
+                    <p class="text-white p-2">Изменить имя пк</p>
+                    <button class="text-white p-2 bg-very-dark-gray rounded-xl border-2 border-black">Сохранить</button>
+                </div>
+            `;
+            putpc.innerHTML = addPc;
+        }
+        setInterval(displayByPing, 15000);
+
+        async function putPc(data,id) {
+            const response = await fetch(`http://localhost:5000/pc/update/${id}`, {
+                'method': "PUT",
+                'headers': {
+                    'Content-type': 'application/json',
+                },
+                'body': JSON.stringify(data)
+            });
+        
+            const res = await response.json();
+            if (res.message) {
+                window.location.href = `home.html`;
+            } else {
+                Errors.innerHTML = res.error;
+            }
+        }
+
+        formPut.addEventListener('submit', async (e) => {
+
+            e.preventDefault();
+
+            const name = document.forms['putpc'].name.value;
+
+            const data = {
+                'name': name,
+            }
+            putPc(data, pcId);
+        });
+    
+        async function deletePc() {
+            await fetch(`http://localhost:5000/pc/delete/${pcId}`, {
+                'method': "DELETE",
+                'headers': {
+                    'Content-type': 'application/json',
+                },
+            });
+            window.location.href = `home.html`;
+        }
+
+    </script>
 </body>
 </html>

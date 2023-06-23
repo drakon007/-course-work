@@ -53,7 +53,8 @@ function authorizationCheck() {
 function openPage() {
     let url = decodeURI(window.location.href);
     let str = url.substring( url.lastIndexOf('/') + 1, url.length);
-    return  str.split('?')[0];
+    str = str.split('/');
+    return   String(str).split('?')[0];
 }
 
 function date(data) {
@@ -125,39 +126,65 @@ async function pc(data, Errors) {
 
 }
 
+async function getAllGroup() {
+    let res = await fetch(`http://localhost:5000/group/getall`);
+    return res.json();
+    
+}
+async function groupDel(id) {
+    console.log(1231231);
+    await fetch(`http://localhost:5000/group/delete/${id}`, {
+        'method': "DELETE",
+        'headers': {
+            'Content-type': 'application/json',
+        },
+    });
+    window.location.href = `home.html`;
+}
 async function displayListHomePage() {
     displayHeaders();
     const persCompAll = await allpc();
+    const Groups = await getAllGroup();
     const content = document.querySelector("#content");
     content.innerHTML ="";
 
     for (let pc of persCompAll) {
         
         let arr = date(pc.lasttime);
-
         const addPc = 
         `
             <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" style="width: 250px; height: 150px;" id="${pc._id}">
-
-    
-            <div class="mt-2 ml-4 mb-1 flex justify-between"><button><img src="img/power-off.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"> <button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"></button></div>
-            <h1 class="text-white text-xl ml-6">${pc.name}</h1>
-            <p class="ml-6 text-tgray">${pc.ip}</p>
-
-           
-            <p class="ml-6 text-tgray mr-6 w-4/5">${" Был в сети: " + arr[0] + "." + arr[1] + "." + arr[2]}</p>
-
+                <div class="mt-2 ml-4 mb-1 flex justify-between">
+                    <button><img src="img/power-off.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"></button>
+                    <a href="info.html?id=${pc._id}"><button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px; transform: rotate(180deg); margin-right: 15px"></button></a>
+                </div>
+                <h1 class="text-white text-xl ml-6">${pc.name}</h1>
+                <p class="ml-6 text-tgray">${pc.ip}</p>
+                <p class="ml-6 text-tgray mr-6 w-4/5">${" Был в сети: " + arr[0] + "." + arr[1] + "." + arr[2]}</p>
             </div>
 
         `;
 
         content.innerHTML += addPc;
     }
-
+    for ( let group of Groups ) {
+        let leng = group.namespc.length;
+        const groupForAdd = `
+        <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" style="width: 250px; height: 150px;" id="${group._id}">
+        <div class="mt-2 ml-4 mb-1 flex justify-between">
+        <button onclick="deletGroup("${group._id}")"><img src="img/delet.png" alt="картинка не прогрузилась" style="width: 30px; height: 30px;"></button>
+        <a href="group.html?id=${group._id}"><button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px; transform: rotate(180deg); margin-right: 15px"></button></a>
+        </div>
+        <h1 class="text-white text-xl ml-6 class="mt-6"">Группа: ${group.name}</h1>
+        <p class="ml-6 text-tgray">Колличество ПК: ${leng}</p>
+        </div>
+        `
+        content.innerHTML += groupForAdd;
+    }
     const addGroup = 
     `
     <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6  justify-center items-center" style="width: 250px; height: 150px;">
-    <img onclick="" src="./img/add.png" alt="проверьте интернет" style="width: 75px; height: 75px; margin-left: auto; margin-right:auto; margin-top: 30px">
+    <a href="addgroup.html"><img onclick="" src="./img/add.png" alt="проверьте интернет" style="width: 75px; height: 75px; margin-left: auto; margin-right:auto; margin-top: 30px"></a>
     </div>
 
     `;
@@ -170,6 +197,7 @@ function delet() {
 
 async function displayListHomePageLastPing() {
     const persCompAll = await pingall();
+    const Groups = await getAllGroup();
     const content = document.querySelector("#content");
     content.innerHTML ="";
 
@@ -189,41 +217,56 @@ async function displayListHomePageLastPing() {
         const addPc = 
         `
             <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" style="width: 250px; height: 150px;" id="${pc._id}">
-
-    
-            <div class="mt-2 ml-4 mb-1 flex justify-between"><button><img src="img/${strBut}" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"> <button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px;"></button></div>
-
-            <h1 class="text-white text-xl ml-6">${pc.name}</h1>
-            <p class="ml-6 text-tgray">${pc.ip}</p>
-
-
-            <p class="ml-6 text-tgray mr-6 w-4/5">${strData}</p>
-
+                <div class="mt-2 ml-4 mb-1 flex justify-between">
+                    <button><img src="img/${strBut}" alt="картинка не прогрузилась" style="width: 30px; height: 30px;"></button>
+                    <a href="info.html?id=${pc._id}"><button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px; transform: rotate(180deg);"></button></a>
+                </div>
+                <h1 class="text-white text-xl ml-6">${pc.name}</h1>
+                <p class="ml-6 text-tgray">${pc.ip}</p>
+                <p class="ml-6 text-tgray mr-6 w-4/5">${strData}</p>
             </div>
 
         `;
 
         content.innerHTML += addPc;
     }
+
+    for ( let group of Groups ) {
+        let leng = group.namespc.length;
+        const groupForAdd = `
+        <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" style="width: 250px; height: 150px;" id="${group._id}">
+        <div class="mt-2 ml-4 mb-1 flex justify-between">
+            <button onclick="groupDel(${group._id})"><img src="img/delet.png" alt="картинка не прогрузилась" style="width: 30px; height: 30px;"></button>
+            <a href="group.html?id=${group._id}"><button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px; transform: rotate(180deg); margin-right: 15px"></button></a>
+        </div>
+        <h1 class="text-white text-xl ml-6 class="mt-6"">Группа: ${group.name}</h1>
+        <p class="ml-6 text-tgray">Колличество ПК: ${leng}</p>
+        </div>
+        `
+        content.innerHTML += groupForAdd;
+    }
+
     const addGroup = 
     `
     <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6  justify-center items-center" style="width: 250px; height: 150px;">
-    <img onclick="" src="./img/add.png" alt="проверьте интернет" style="width: 75px; height: 75px; margin-left: auto; margin-right:auto; margin-top: 30px">
+    <a href="addgroup.html"><img onclick="" src="./img/add.png" alt="проверьте интернет" style="width: 75px; height: 75px; margin-left: auto; margin-right:auto; margin-top: 30px"></a>
     </div>
 
     `;
     content.innerHTML += addGroup;
 }
 
-
+async function required() {
+    
+}
 
 switch (openPage()) {
     case 'home.html':
         setInterval(authorizationCheck, 1000);
         displayHeaders();
         displayListHomePage();
-        setInterval(displayListHomePageLastPing, 4000);
-
+        //setInterval(displayListHomePageLastPing, 4000);
+        displayListHomePageLastPing();
         break;
     case 'login.html':
         const formlogin = document.querySelector("#authorization_form"),
@@ -316,6 +359,17 @@ switch (openPage()) {
 
         })
         break;
+    case 'info.html':
+        displayHeaders();
+        setInterval(authorizationCheck, 1000);
+        break;
+    case 'addgroup.html':
+        displayHeaders();
+        setInterval(authorizationCheck, 1000);
+        break;
+        default:
+            console.log('Error')
+            break;
 
 }
 
