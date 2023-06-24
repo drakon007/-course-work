@@ -131,16 +131,7 @@ async function getAllGroup() {
     return res.json();
     
 }
-async function groupDel(id) {
-    console.log(1231231);
-    await fetch(`http://localhost:5000/group/delete/${id}`, {
-        'method': "DELETE",
-        'headers': {
-            'Content-type': 'application/json',
-        },
-    });
-    window.location.href = `home.html`;
-}
+
 async function displayListHomePage() {
     displayHeaders();
     const persCompAll = await allpc();
@@ -172,7 +163,6 @@ async function displayListHomePage() {
         const groupForAdd = `
         <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" style="width: 250px; height: 150px;" id="${group._id}">
         <div class="mt-2 ml-4 mb-1 flex justify-between">
-        <button onclick="deletGroup("${group._id}")"><img src="img/delet.png" alt="картинка не прогрузилась" style="width: 30px; height: 30px;"></button>
         <a href="group.html?id=${group._id}"><button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px; transform: rotate(180deg); margin-right: 15px"></button></a>
         </div>
         <h1 class="text-white text-xl ml-6 class="mt-6"">Группа: ${group.name}</h1>
@@ -236,7 +226,6 @@ async function displayListHomePageLastPing() {
         const groupForAdd = `
         <div class="cards rounded-xl bg-bgform max-w-card min-w-max p-2 break-all mt-6 mr-6" style="width: 250px; height: 150px;" id="${group._id}">
         <div class="mt-2 ml-4 mb-1 flex justify-between">
-            <button onclick="groupDel(${group._id})"><img src="img/delet.png" alt="картинка не прогрузилась" style="width: 30px; height: 30px;"></button>
             <a href="group.html?id=${group._id}"><button><img src="img/menu.png" alt="картинка не прогрузилась" style="width: 35px; height: 35px; transform: rotate(180deg); margin-right: 15px"></button></a>
         </div>
         <h1 class="text-white text-xl ml-6 class="mt-6"">Группа: ${group.name}</h1>
@@ -367,9 +356,17 @@ switch (openPage()) {
         displayHeaders();
         setInterval(authorizationCheck, 1000);
         break;
-        default:
-            console.log('Error')
-            break;
+    case 'group.html':
+        displayHeaders();
+        setInterval(authorizationCheck, 1000);
+        break;
+    case 'addingdeling.html':
+        displayHeaders();
+        setInterval(authorizationCheck, 1000);
+        break;
+    default:
+        console.log('Error')
+        break;
 
 }
 

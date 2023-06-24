@@ -16,6 +16,78 @@
     
 
     <main class="flex mx-auto w-4/5 flex-wrap justify-evenly" id="group">
+        <main class="flex mx-auto w-4/5 flex-wrap 2xl:flex-col xl:flex-col lg:flex-col sm:flex-col bg-bgform rounded-xl mt-6 min-h-table ">
+
+            <div class=" foraddgroup form w-full p-6 mx-auto">
+                <h1 class="text-white p-2">Название групы</h1>
+            </div>
+           
+            <div class="pcname form w-full  p-6 mx-auto">
+                <h1 class="text-white p-2">Название ПК в группе:</h1>
+            </div>
     </main>
+    <script>
+         const formPut = document.querySelector(".foraddgroup"),
+         formpc = document.querySelector(".pcname");
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        let groupId = params.id;
+        async function getGroupById(id) {
+            let res = await fetch(`http://localhost:5000/group/getone/${id}`)
+            return res.json();
+        }
+
+        async function renderGroup() {
+            let group = await getGroupById(groupId);
+            let i = 1;
+            for (let pc of group.namespc) {
+                let addpc = `
+                <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">ПК_${i}</p></div>
+                    <div id='name'  class="name bg-very-dark-gray text-white p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">${pc}</p></div>
+                </div>
+                `;
+                i++;
+                formpc.innerHTML += addpc;
+            }
+            const addInPage = `
+            <div class="w-full flex mt-2">
+                    <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-2">Название</p></div>
+                    <div id='name'  class="name bg-very-dark-gray text-white p-1.5 w-full rounded-r-xl border-2 border-black"><p class="text-white p-2">${group.name}</p></div>
+                </div>
+            `;
+
+            const footgroup = `
+            <p class="text-white mt-4 text-base">Дополнительно:</p>
+                <div class="w-full flex justify-between mt-2">
+                    <p class="text-white p-2">Добавить пк</p>
+                    <a href="addingdeling.html?id=${groupId}*add" class="text-white p-2 bg-very-dark-gray rounded-xl border-2 border-black">Добавить</a>
+                </div>
+                <div class="w-full flex justify-between mt-2">
+                    <p class="text-white p-2">Удалить пк</p>
+                    <a href="addingdeling.html?id=${groupId}*del" class="text-white p-2 bg-very-dark-gray rounded-xl border-2 border-black">Удалить</a>
+                </div>
+                <div class="w-full flex justify-between mt-2">
+                    <p class="text-white p-2">Удалить групу пк</p>
+                    <button onclick="groupDel()" class="text-white p-2 bg-very-dark-gray rounded-xl border-2 border-black">Удалить</button>
+                </div>
+            `;
+
+            formPut.innerHTML += addInPage;
+            formpc.innerHTML += footgroup;
+
+        }
+        renderGroup();
+        async function groupDel() {
+        await fetch(`http://localhost:5000/group/delete/${groupId}`, {
+            'method': "DELETE",
+            'headers': {
+                'Content-type': 'application/json',
+            },
+        });
+        window.location.href = `home.html`;
+        }
+    </script>
 </body>
 </html>

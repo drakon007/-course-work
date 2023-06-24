@@ -71,13 +71,14 @@ export async function createGroup(req, res) {
 
 export async function deleteGroup(req, res) {
     try {
-
+        
         const groupId = req.params.id;
         if (!groupId) {
             res.status(403).json({message: "Такой группы не существует"});
         }
-        const groupDelete = Group.findByIdAndDelete(groupId);
-        return res.status(200).json({groupDelete});
+        const groupDelete = await Group.findByIdAndDelete(groupId);
+        console.log(groupDelete);
+        return res.status(200).json({message: "Группа удалена"});
 
     } catch (error) {
        console.log(error);
@@ -129,7 +130,6 @@ export async function addInGroup(req, res) {
 
 export async function deletInGroup(req, res) {
     try {
-
         const { name, namespc } = req.body;
         if (!name) {
             return res.status(403).json({message: "Введите название группы"}); 

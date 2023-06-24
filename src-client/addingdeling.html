@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/output.css">
+    <script defer src="scripts/script.js"></script>
+    <title>addingroupanddelingroup</title>
+
+</head>
+
+<body class="bg-bgpage">
+
+ 
+    <header class="text-white flex justify-between">
+
+    </header>
+
+    <main class="flex flex-wrap mx-auto w-6/12 bg-bgform rounded-xl mt-6 min-h-table ">
+
+        <div id="rendForm" class=" w-full p-6 mx-auto">
+        
+        </div>   
+
+    </main>
+
+    <div  class="flex flex-wrap mx-auto w-6/12 mt-6 min-h-table">  <span id="errors_update" class=" text-center text-white text-center text-2xl mb-2 ml-4"></span></div>
+
+    <script>
+        const form = document.querySelector("#rendForm"),
+        error = document.querySelector("#errors_update");
+
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+
+        let str = params.id.split("*");
+        let groupId = str[0];
+        let pars = str[1];
+
+        async function getGroupById(id) {
+            let res = await fetch(`http://localhost:5000/group/getone/${id}`)
+            return res.json();
+        }
+
+        async function renderPage() {
+            let group = await getGroupById(groupId);
+            if ( pars == "add") {
+               form.innerHTML = ``;
+               
+               const addG = `
+               <p class="text-white text-2xl">Добавление ПК в группу</p>
+
+                <form id="addgroup_form" name="addgroup" class="form flex h-cform w-full mx-auto flex-col rounded-xl bg-bgform p-4 mt-2">
+                    <div class="w-full flex ">
+                        <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-1">Введите имя группы</p></div>
+                        <input class="p-1.5 w-full rounded-r-xl" type="text" id="namegroup" readonly value="${group.name}" name="namegroup">
+                    </div>
+
+                    <div class="w-full flex mt-6">
+                        <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-1">Введите адрес или имя ПК</p></div>
+                        <input class="p-1.5 w-full rounded-r-xl" type="text" id="namespc"  name="namespc">
+                    </div>
+
+                    <button class="text-white bg-very-dark-gray my-1 mt-2 p-1 rounded-xl border-2 border-black">Создать</button>
+                </form>
+               `;
+               form.innerHTML =addG;
+            } else {
+                form.innerHTML = ``;
+               
+               const addG = `
+               <p class="text-white text-2xl">Удаление ПК из группы</p>
+
+                <form id="addgroup_form" name="addgroup" class="form flex h-cform w-full mx-auto flex-col rounded-xl bg-bgform p-4 mt-2">
+                    <div class="w-full flex ">
+                        <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-1">Введите имя группы</p></div>
+                        <input class="p-1.5 w-full rounded-r-xl" type="text" id="namegroup" readonly value="${group.name}" name="namegroup">
+                    </div>
+
+                    <div class="w-full flex mt-6">
+                        <div class="bg-dark-gray p-1.5 rounded-l-xl border-2 border-black"><p class="text-white p-1">Введите адрес или имя ПК</p></div>
+                        <input class="p-1.5 w-full rounded-r-xl" type="text" id="namespc"  name="namespc">
+                    </div>
+
+                    <button class="text-white bg-very-dark-gray my-1 mt-2 p-1 rounded-xl border-2 border-black">Удалить</button>
+                </form>
+               `;
+               form.innerHTML =addG; 
+            }
+        }
+        renderPage();
+
+        async function createGroup(data) {
+            const response = await fetch(`http://localhost:5000/group/addpc`, {
+                'method': "PUT",
+                'headers': {
+                    'Content-type': 'application/json',
+                },
+                'body': JSON.stringify(data)
+            });
+        
+            const res = await response.json();
+            if (res.message) {
+                window.location.href = `home.html`;
+            } else {
+                error.innerHTML = res.error;
+            }
+        }
+
+        async function deletGroup(data) {
+            const response = await fetch(`http://localhost:5000/group/deletpc`, {
+                'method': "DELETE",
+                'headers': {
+                    'Content-type': 'application/json',
+                },
+                'body': JSON.stringify(data)
+            });
+        
+            const res = await response.json();
+            if (res.message) {
+                window.location.href = `home.html`;
+            } else {
+                error.innerHTML = res.error;
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+
+            e.preventDefault();
+
+            const namegroup = document.forms['addgroup'].namegroup.value,
+             namespc = document.forms['addgroup'].namespc.value;
+
+            const data = {
+                'name': namegroup,
+                'namespc': namespc
+            }
+            if (pars == "add" ) {
+                createGroup(data);  
+            } else {
+                console.log(data);
+                deletGroup(data);
+            }
+            
+        });
+
+
+
+    </script>
+</body>
+</html>

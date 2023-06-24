@@ -9,7 +9,7 @@ groupRouter.get("/getone/:id", groupController.getOneGroup);
 
 groupRouter.put("/addpc", groupController.addInGroup);
 
-groupRouter.put("/deletpc", groupController.deletInGroup);
+groupRouter.delete("/deletpc", groupController.deletInGroup);
 
 groupRouter.delete("/delete/:id", groupController.deleteGroup);
 
